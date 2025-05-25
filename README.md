@@ -1,8 +1,7 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// mdhSteamScreenshotsDownloader(by Moerderhoschi) - v2025-05-25
-// github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
-// a set of Javascript and Powershell code to download screenshots from steam
-///////////////////////////////////////////////////////////////////////////////////////////////////
+mdhSteamScreenshotsDownloader(by Moerderhoschi) - v2025-05-25
+github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
+a set of Javascript and Powershell code to download screenshots from steam
+
 1. In your browser go to the Steam Screenshots page e.g. https://steamcommunity.com/id/Moerderhoschi/screenshots/
 2. open the webbrowser developer tools (for chrome F12)
 3. insert the following code and hit enter:
