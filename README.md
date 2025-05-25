@@ -18,6 +18,12 @@ document.querySelectorAll('a').forEach(link =>{if (link.href.includes("steamcomm
 
 ![image](https://github.com/user-attachments/assets/dbbf2bc0-8cfb-47e5-b51c-49a7eeec4d87)
 
+![image](https://github.com/user-attachments/assets/e3a02b3f-7bb2-47e0-a9d0-024b401c6bdc)
 
 6. open the links.log file with an texteditor and clear the file so that only a list of valid links is in the links.log file
-7. run the mdhSteamScreenshotsDownloader.bat and it will start downloading all screenshots of the links.log file
+
+![image](https://github.com/user-attachments/assets/4dfc855e-6b42-415f-949c-d466b320b199)
+
+8. run the mdhSteamScreenshotsDownloader.bat and it will start downloading all screenshots of the links.log file
+
+![image](https://github.com/user-attachments/assets/d9763984-81bc-433c-880d-c9f4ca86341a)
