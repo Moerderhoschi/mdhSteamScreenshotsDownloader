@@ -29,3 +29,5 @@ document.querySelectorAll('a').forEach(link =>{if (link.href.includes("steamcomm
 ![image](https://github.com/user-attachments/assets/d9763984-81bc-433c-880d-c9f4ca86341a)
 
 ![image](https://github.com/user-attachments/assets/072b8d64-0687-4f3f-91aa-e4165e68e263)
+
+![image](https://github.com/user-attachments/assets/a75960d1-2684-424b-b44e-acba30f7a002)
