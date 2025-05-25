@@ -10,7 +10,7 @@ a set of Javascript and Powershell code to download screenshots from steam
 2. open the webbrowser developer tools (for chrome F12)
 3. insert the following code and hit enter:
 ```
-document.querySelectorAll('a').forEach(link =>{if (link.href.includes("steamcommunity.com/sharedfiles/filedetails/?id=")){fetch(link.href).then(response => {return response.text();}).then(html =>{let parser = new DOMParser();let doc = parser.parseFromString(html, 'text/html');doc.querySelectorAll('a').forEach(link =>{if (link.href.includes("images.steamusercontent.com/ugc/")){console.log(link.href);};});}).catch(error =>{console.error('error cal site:', error);});}});
+document.querySelectorAll('a').forEach(link =>{if (link.href.includes("steamcommunity.com/sharedfiles/filedetails/?id=")){fetch(link.href).then(response => {return response.text();}).then(html =>{let parser = new DOMParser();let doc = parser.parseFromString(html, 'text/html');doc.querySelectorAll('a').forEach(link =>{if (link.href.includes("images.steamusercontent.com/ugc/")){console.log(link.href.slice(0, link.href.indexOf('?')));};});}).catch(error =>{console.error('error cal site:', error);});}});
 ```
 ![image](https://github.com/user-attachments/assets/c0a8db2b-0eb1-4218-b4c6-50742c45f96b)
 
