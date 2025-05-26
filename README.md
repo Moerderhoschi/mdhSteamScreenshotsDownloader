@@ -1,4 +1,4 @@
-mdhSteamScreenshotsDownloader(by Moerderhoschi) - v2025-05-25
+mdhSteamScreenshotsDownloader(by Moerderhoschi)
 
 a set of Javascript and Powershell code to download screenshots from steam
 
