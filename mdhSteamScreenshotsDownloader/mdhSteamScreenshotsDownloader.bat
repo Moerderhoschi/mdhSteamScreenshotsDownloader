@@ -29,7 +29,7 @@ set /p _n=
 
 mkdir screenshots
 ::powershell -c "gc \"links.log\" | ForEach-Object {  $a=$_.SubString($_.IndexOf(\"https://images.steamusercontent.com/ugc/\")) ; $b=wget $a ; $c=$b.headers[\"Content-Disposition\"] ; $d = $c -replace '.*filename=\"(.*)\";', '$1' ; wget $a -o screenshots\$d }"
-powershell -c "gc \"links.log\" | ForEach-Object {  $a=$_.SubString($_.IndexOf(\"https://images.steamusercontent.com/ugc/\")) ; $i=$a.indexOf(\"/\",40) ; $i=$a.indexOf(\"/\",$i+1) ; $a=$a.subString(0, $i+1) ; $b=wget $a ; $c=$b.headers[\"Content-Disposition\"] ; $d = $c -replace '.*filename=\"(.*)\";', '$1' ; wget $a -o screenshots\$d }"
+powershell -c "gc \"links.log\" | ForEach-Object {  $a=$_.SubString($_.IndexOf(\"https://images.steamusercontent.com/ugc/\")) ; $i=$a.indexOf(\"/\",40) ; $i=$a.indexOf(\"/\",$i+1) ; $a=$a.subString(0, $i+1) ; $b=wget -UseBasicPArsing $a ; $c=$b.headers[\"Content-Disposition\"] ; $d = $c -replace '.*filename=\"(.*)\";', '$1' ; wget $a -o screenshots\$d }"
 if %_n% == 1 GOTO o1
 if %_n% == 3 GOTO o3
 
