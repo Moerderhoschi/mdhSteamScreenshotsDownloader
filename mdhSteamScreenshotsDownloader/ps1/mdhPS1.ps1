@@ -5,12 +5,13 @@ $array = $p4..500 ;
 if ($p1 -eq 3) {$array = gc links.log}
 #gc links.log | ForEach-Object {} 
 
+$y = "id"
 $array | ForEach-Object {
 
 	if ($p1 -ne 3) {
-		$url = "https://steamcommunity.com/id/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=newestfirst&view=grid"
+		$url = "https://steamcommunity.com/"+$y+"/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=newestfirst&view=grid"
 		if ($p1 -eq 2) {
-			$url = "https://steamcommunity.com/id/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=oldestfirst&view=grid"
+			$url = "https://steamcommunity.com/"+$y+"/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=oldestfirst&view=grid"
 		}
 		
 		Write-Output "scanning site $url" ;
@@ -28,6 +29,26 @@ $array | ForEach-Object {
 				}
 			}
 		}
+
+		if ($links.count -eq 0) {
+			if ($y -eq "id") {$y = "profiles"} else {$y = "id"}
+			$url = "https://steamcommunity.com/"+$y+"/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=newestfirst&view=grid"
+			if ($p1 -eq 2) {
+				$url = "https://steamcommunity.com/"+$y+"/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=oldestfirst&view=grid"
+			}
+
+			$array2 | ForEach-Object {
+				if ($links.count -eq 0) {
+					$response = wget -UseBasicPArsing $url
+					$response = $response.RawContent
+					$links = [regex]::Matches($response, 'https://steamcommunity.com/sharedfiles/filedetails/\?id=\d+')		
+					if ($links.count -eq 0) {
+						Write-Output "no pics found on $url, retry $_/5"
+					}
+				}
+			}
+		}
+
 		if ($links.count -eq 0) {Write-Output "no pics found on $url, exit" ; exit}
 	}
 	else
