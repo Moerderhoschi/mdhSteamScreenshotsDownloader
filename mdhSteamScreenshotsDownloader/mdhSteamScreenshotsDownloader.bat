@@ -47,7 +47,7 @@ echo enter the steam userID(name or number) e.g. moerderhoschi:
 set /p _n2=
 echo.
 
-echo enter a specifig game id if you want to download only screenshots of a specifig game e.g. 107410 for Arma 3 or press enter for all games:
+echo enter a specifig game id if you want to download only screenshots of a specific game e.g. 107410 for Arma 3 or press enter for all games:
 set /p _n3=
 echo.
 

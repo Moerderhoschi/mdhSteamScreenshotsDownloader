@@ -20,7 +20,7 @@ $array | ForEach-Object {
 		$array2 = 1..5 ;
 		$array2 | ForEach-Object {
 			if ($links.count -eq 0) {
-				$response = wget $url
+				$response = wget -UseBasicPArsing $url
 				$response = $response.RawContent
 				$links = [regex]::Matches($response, 'https://steamcommunity.com/sharedfiles/filedetails/\?id=\d+')		
 				if ($links.count -eq 0) {
@@ -39,7 +39,7 @@ $array | ForEach-Object {
 		if ($p1 -ne 3) {
 			$url = $_.Value
 			Write-Output "scanning pic site $url"
-			$response = wget $url
+			$response = wget -UseBasicPArsing $url
 			$response = $response.RawContent
 			$links2 = [regex]::Match($response, 'https://images\.steamusercontent\.com/ugc/[^?]+')
 		}
@@ -88,17 +88,17 @@ $array | ForEach-Object {
 				
 				$m='https://steamcommunity.com/app/'+$f+'/discussions/' 
 				Write-Output "search for pic game name $f on SteamHub"
-				$m=wget $m 
+				$m=wget -UseBasicPArsing $m 
 				$m=$m.Content -match '<div class=\"apphub_AppName ellipsis\"[^>]*>(.*?)</div>' 
 				if ($m -eq 'true') {$m=$matches[1]} else {
 					$m='https://store.steampowered.com/app/'+$f+'/' 
 					Write-Output "search for pic game name $f on SteamStore"
-					$m=wget $m 
+					$m=wget -UseBasicPArsing $m 
 					$m=$m.Content -match '<div id=\"appHubAppName\"[^>]*>(.*?)</div>' 
 					if ($m -eq 'true') {$m=$matches[1]} else {
 						$m='https://steamcharts.com/app/'+$f 
 						Write-Output "search for pic game name $f on steamcharts.com"
-						$m=wget $m 
+						$m=wget -UseBasicPArsing $m 
 						$m=$m.Content -match '<h1 id=\"app-title\"><a href=\"\"[^>]*>(.*?)</a></h1>' 
 						if ($m -eq 'true') {$m=$matches[1]} else {
 							$m=''
@@ -116,7 +116,7 @@ $array | ForEach-Object {
 				$l = $l -replace '[\\\/:*?"<>|]', ' '
 				$l = $l -replace '\s{2,}', ' '
 				Write-Output "setup final name to $l and download"
-			
+
 				wget -UseBasicPArsing $a -o screenshots\$l
 				Write-Output "----------------------------------------"
 			}
