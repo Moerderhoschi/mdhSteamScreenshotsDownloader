@@ -1,14 +1,16 @@
 document.querySelectorAll('a').forEach(link =>{if (link.href.includes("steamcommunity.com/sharedfiles/filedetails/?id=")){fetch(link.href).then(response => {return response.text();}).then(html =>{let parser = new DOMParser();let doc = parser.parseFromString(html, 'text/html');doc.querySelectorAll('a').forEach(link =>{if (link.href.includes("images.steamusercontent.com/ugc/")){console.log(link.href.slice(0, link.href.indexOf('?')));};});}).catch(error =>{console.error('error cal site:', error);});}});
 undefined
-VM1320:1 https://images.steamusercontent.com/ugc/14773807756799313731/D45401011E44C9D67D0EC08D56F73BCAC9393BED/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false
-VM1320:1 https://images.steamusercontent.com/ugc/10580502276226505494/62EA7F994C44A22638B5C7944BDF13EE9A75C5B7/
-VM1320:1 https://images.steamusercontent.com/ugc/12896172922786180536/EDD0DC88E3C1681B5514E2042F27B5D7447C7A6F/
-VM1320:1 https://images.steamusercontent.com/ugc/15561922257799101056/28739101DAD08154F364918E186DD1C18290CF57/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false
-VM1320:1 https://images.steamusercontent.com/ugc/12420262296162627257/139E3B4EC6EA16B34241842880E2C3A0C7872DED/
-VM1320:1 https://images.steamusercontent.com/ugc/9529157208525827085/92B688C02883ED430D1E876BBDA70AD910541A14/
-VM1320:1 https://images.steamusercontent.com/ugc/11048842477351648956/7FE4CD6EA809A7148FB8CA90170699214594888A/
-VM1320:1 https://images.steamusercontent.com/ugc/15924832657623475826/B74BA1BD69A8026B33D33C4AF5709BD08CA046CE/
-VM1320:1 https://images.steamusercontent.com/ugc/16264028321337701354/54B3624075B389FCD1FA17A0AEC2C2E11401DE9E/
-VM1320:1 https://images.steamusercontent.com/ugc/15556580280106956663/C099857297D9C270B62D561CA3DE6128C1544668/
-VM1320:1 https://images.steamusercontent.com/ugc/15542679106151404419/ED56CB735E314724CA955344E782D4ACAF38448D/
-VM1320:1 https://images.steamusercontent.com/ugc/9395969794667449891/C462BBC3E74310D28BDE539BB391F2337E3263AF/
+VM455:1 https://images.steamusercontent.com/ugc/15561922257799101056/28739101DAD08154F364918E186DD1C18290CF57/
+VM455:1 https://images.steamusercontent.com/ugc/10580502276226505494/62EA7F994C44A22638B5C7944BDF13EE9A75C5B7/
+VM455:1 https://images.steamusercontent.com/ugc/14773807756799313731/D45401011E44C9D67D0EC08D56F73BCAC9393BED/
+VM455:1 https://images.steamusercontent.com/ugc/9529157208525827085/92B688C02883ED430D1E876BBDA70AD910541A14/
+VM455:1 https://images.steamusercontent.com/ugc/12420262296162627257/139E3B4EC6EA16B34241842880E2C3A0C7872DED/
+VM455:1 https://images.steamusercontent.com/ugc/12896172922786180536/EDD0DC88E3C1681B5514E2042F27B5D7447C7A6F/
+VM455:1 https://images.steamusercontent.com/ugc/15924832657623475826/B74BA1BD69A8026B33D33C4AF5709BD08CA046CE/
+VM455:1 https://images.steamusercontent.com/ugc/11048842477351648956/7FE4CD6EA809A7148FB8CA90170699214594888A/
+VM455:1 https://images.steamusercontent.com/ugc/15542679106151404419/ED56CB735E314724CA955344E782D4ACAF38448D/
+VM455:1 https://images.steamusercontent.com/ugc/16264028321337701354/54B3624075B389FCD1FA17A0AEC2C2E11401DE9E/
+VM455:1 https://images.steamusercontent.com/ugc/9395969794667449891/C462BBC3E74310D28BDE539BB391F2337E3263AF/
+
+
+
