@@ -25,14 +25,14 @@ $array | ForEach-Object {
 		Write-Output "----------------------------------------" 
 	
 		$links = @() 
-		$array2 = 1..5 
+		$array2 = 1..9 
 		$array2 | ForEach-Object {
 			if ($links.count -eq 0) {
 				$response = wget -UseBasicPArsing $url
 				$response = $response.RawContent
 				$links = [regex]::Matches($response, 'https://steamcommunity.com/sharedfiles/filedetails/\?id=\d+')		
 				if ($links.count -eq 0) {
-					Write-Output "no pics found on $url, retry $_/5"
+					Write-Output "no pics found on $url, retry $_/9"
 				}
 			}
 		}
@@ -50,7 +50,7 @@ $array | ForEach-Object {
 					$response = $response.RawContent
 					$links = [regex]::Matches($response, 'https://steamcommunity.com/sharedfiles/filedetails/\?id=\d+')		
 					if ($links.count -eq 0) {
-						Write-Output "no pics found on $url, retry $_/5"
+						Write-Output "no pics found on $url, retry $_/9"
 					}
 				}
 			}
@@ -152,6 +152,7 @@ $array | ForEach-Object {
 				Write-Output "setup name to $l"
 				$pattern = 
 				$l = $l -replace '[\\\/:*?"<>|]', ' '
+				$l = $l -replace '&amp;', '&'
 				$l = $l -replace '\s{2,}', ' '
 				Write-Output "setup final name to $l and download"
 
