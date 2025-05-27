@@ -1,3 +1,9 @@
+###################################################################################################
+## mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-27
+## github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
+## a set of Javascript and Powershell code to download screenshots from steam
+###################################################################################################
+
 param ([int]$p1, [string]$p2, [int]$p3, [int]$p4, [int]$p5)
 
 $array = $p4..500 ;
