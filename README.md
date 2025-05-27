@@ -7,6 +7,9 @@ a set of Javascript and Powershell code to download screenshots from steam
 Variant 1 (easy to use):
 1. execute the mdhSteamScreenshotsDownloader.bat and choose option 1 or 2
 
+![image](https://github.com/user-attachments/assets/1e574af8-11dd-4b70-94c9-33afdfe53886)
+
+
 Variant 2 (you can download screenshots of friends which are not visible for public):
 1. In your browser go to the Steam Screenshots page e.g. https://steamcommunity.com/id/Moerderhoschi/screenshots/
 2. open the webbrowser developer tools (for chrome F12)
