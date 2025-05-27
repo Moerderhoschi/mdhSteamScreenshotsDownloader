@@ -145,6 +145,8 @@ $array | ForEach-Object {
 				Write-Output "setup final name to $l and download"
 
 				wget -UseBasicPArsing $a -o screenshots\$l
+				Set-ItemProperty -Path screenshots\$l -Name CreationTime -Value $h
+				Set-ItemProperty -Path screenshots\$l -Name LastWriteTime -Value $h
 				Write-Output "----------------------------------------"
 			}
 		}
