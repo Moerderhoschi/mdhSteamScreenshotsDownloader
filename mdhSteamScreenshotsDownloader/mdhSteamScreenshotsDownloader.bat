@@ -31,7 +31,7 @@ set _n1=1
 set _n2=moerderhoschi
 set _n3=0
 set _n4=1
-set _n5=1
+set _n5=2
 
 set /p _n1=
 echo.

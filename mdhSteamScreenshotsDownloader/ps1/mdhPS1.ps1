@@ -6,10 +6,11 @@
 
 param ([int]$p1, [string]$p2, [int]$p3, [int]$p4, [int]$p5)
 
-$array = $p4..500 ;
+$array = $p4..500 
+$q = @() 
+$r = @() 
 
 if ($p1 -eq 3) {$array = gc links.log}
-#gc links.log | ForEach-Object {} 
 
 $y = "id"
 $array | ForEach-Object {
@@ -20,11 +21,11 @@ $array | ForEach-Object {
 			$url = "https://steamcommunity.com/"+$y+"/"+$p2+"/screenshots/?p="+$_+"&appid="+$p3+"&sort=oldestfirst&view=grid"
 		}
 		
-		Write-Output "scanning site $url" ;
-		Write-Output "----------------------------------------" ;
+		Write-Output "scanning site $url" 
+		Write-Output "----------------------------------------" 
 	
-		$links = @() ;
-		$array2 = 1..5 ;
+		$links = @() 
+		$array2 = 1..5 
 		$array2 | ForEach-Object {
 			if ($links.count -eq 0) {
 				$response = wget -UseBasicPArsing $url
@@ -113,25 +114,35 @@ $array | ForEach-Object {
 				
 				Write-Output "found Last-Modified Date $k"
 				
-				$m='https://steamcommunity.com/app/'+$f+'/discussions/' 
-				Write-Output "search for pic game name $f on SteamHub"
-				$m=wget -UseBasicPArsing $m 
-				$m=$m.Content -match '<div class=\"apphub_AppName ellipsis\"[^>]*>(.*?)</div>' 
-				if ($m -eq 'true') {$m=$matches[1]} else {
-					$m='https://store.steampowered.com/app/'+$f+'/' 
-					Write-Output "search for pic game name $f on SteamStore"
+				$m = 0
+				if ($q.count -gt 0) {
+					$o = $q.IndexOf($f)
+					if ($o -ge 0) {
+						$m = $r[$o]	
+					}
+				}
+				
+				if ($m -eq 0) {
+					$m='https://steamcommunity.com/app/'+$f+'/discussions/' 
+					Write-Output "search for pic game name $f on SteamHub"
 					$m=wget -UseBasicPArsing $m 
-					$m=$m.Content -match '<div id=\"appHubAppName\"[^>]*>(.*?)</div>' 
-					if ($m -eq 'true') {$m=$matches[1]} else {
-						$m='https://steamcharts.com/app/'+$f 
-						Write-Output "search for pic game name $f on steamcharts.com"
+					$m=$m.Content -match '<div class=\"apphub_AppName ellipsis\"[^>]*>(.*?)</div>' 
+					if ($m -eq 'true') {$m = $matches[1] ; $q += $f ; $r += $m} else {
+						$m='https://store.steampowered.com/app/'+$f+'/' 
+						Write-Output "search for pic game name $f on SteamStore"
 						$m=wget -UseBasicPArsing $m 
-						$m=$m.Content -match '<h1 id=\"app-title\"><a href=\"\"[^>]*>(.*?)</a></h1>' 
-						if ($m -eq 'true') {$m=$matches[1]} else {
-							$m=''
-						}
+						$m=$m.Content -match '<div id=\"appHubAppName\"[^>]*>(.*?)</div>' 
+						if ($m -eq 'true') {$m = $matches[1] ; $q += $f ; $r += $m} else {
+							$m='https://steamcharts.com/app/'+$f 
+							Write-Output "search for pic game name $f on steamcharts.com"
+							$m=wget -UseBasicPArsing $m 
+							$m=$m.Content -match '<h1 id=\"app-title\"><a href=\"\"[^>]*>(.*?)</a></h1>' 
+							if ($m -eq 'true') {$m = $matches[1] ; $q += $f ; $r += $m} else {
+								$m='' ; $q += $f ; $r += $m
+							}
+						} 
 					} 
-				} 
+				}
 			
 				if ($p5 -eq 5) {$f=""}
 				if ($p5 -eq 6) {$f=""}
@@ -144,7 +155,7 @@ $array | ForEach-Object {
 				$l = $l -replace '\s{2,}', ' '
 				Write-Output "setup final name to $l and download"
 
-				wget -UseBasicPArsing $a -o screenshots\$l
+				$b.Content | Set-Content -Path ".\screenshots\$l" -Encoding Byte
 				Set-ItemProperty -Path screenshots\$l -Name CreationTime -Value $h
 				Set-ItemProperty -Path screenshots\$l -Name LastWriteTime -Value $h
 				Write-Output "----------------------------------------"
