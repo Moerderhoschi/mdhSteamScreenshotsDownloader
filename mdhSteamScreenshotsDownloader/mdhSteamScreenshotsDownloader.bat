@@ -1,7 +1,7 @@
 @echo off
 goto oStart
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-27
+// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-28
 // github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 // a set of Javascript and Powershell code to download screenshots from steam
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ execute the mdhSteamScreenshotsDownloader.bat and choose option 3
 
 :oStart
 echo ------------------------------------------------------------------------------------------------------------------------------------
-echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-27 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
+echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-28 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 echo ------------------------------------------------------------------------------------------------------------------------------------
 echo Option 1: download all screenshots of steam user (you enter the steamID in next step) start with newest screenshots
 echo Option 2: download all screenshots of steam user (you enter the steamID in next step) start with oldest screenshots
@@ -31,7 +31,9 @@ set _n1=1
 set _n2=moerderhoschi
 set _n3=0
 set _n4=1
-set _n5=2
+set _n5=500
+set _n6=0
+set _n7=2
 
 set /p _n1=
 echo.
@@ -55,6 +57,14 @@ echo enter the screenhots pagenumber to start with or press enter to start with 
 set /p _n4=
 echo.
 
+echo enter the screenhots pagenumber to end with or press enter to end with last page:
+set /p _n5=
+echo.
+
+echo enter 1 to create a folder for every game or press enter to save all screenshots in one folder:
+set /p _n6=
+echo.
+
 :o3
 echo select a name sheme for the screenshots:
 echo Option 1: Gamename GameID yyyy_MM_dd hh_mm_ss_id.jpg
@@ -65,10 +75,10 @@ echo Option 5: Gamename yyyy_MM_dd hh_mm_ss_id.jpg
 echo Option 6: Gamename yyyy_MM_dd hh_mm_ss id.jpg
 echo Option 7: Gamename yyyy-MM-dd hh_mm_ss_id.jpg
 echo Option 8: Gamename yyyy-MM-dd hh_mm_ss id.jpg
-set /p _n5=
+set /p _n7=
 
 if not exist screenshots mkdir screenshots
-powershell -ExecutionPolicy Bypass -File "ps1\mdhPS1.ps1" -p1 %_n1% -p2 %_n2% -p3 %_n3% -p4 %_n4% -p5 %_n5%
+powershell -ExecutionPolicy Bypass -File "bin\mdhPS1.ps1" -p1 %_n1% -p2 %_n2% -p3 %_n3% -p4 %_n4% -p5 %_n5% -p6 %_n6% -p7 %_n7%
 pause
 GOTO o1
 
