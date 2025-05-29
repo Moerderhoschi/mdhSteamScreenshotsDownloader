@@ -2,9 +2,7 @@ mdhSteamScreenshotsDownloader(by Moerderhoschi)
 
 a set of Javascript and Powershell code to download screenshots from steam
 
-![image](https://github.com/user-attachments/assets/71d312c2-5776-4cbd-a1ec-6eed446a148f)
-
-![image](https://github.com/user-attachments/assets/12ea9965-2301-4cce-8146-97af177fd0ec)
+![image](https://github.com/user-attachments/assets/dd4a1b78-906b-4c0c-831d-68a310ad15cf)
 
 Variant 1 (easy to use):
 1. execute the mdhSteamScreenshotsDownloader.bat and choose option 1 or 2
