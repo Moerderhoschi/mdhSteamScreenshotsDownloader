@@ -34,6 +34,7 @@ set _n4=1
 set _n5=500
 set _n6=0
 set _n7=2
+set _n8=0
 
 set /p _n1=
 echo.
@@ -61,25 +62,34 @@ echo enter the screenhots pagenumber to end with or press enter to end with last
 set /p _n5=
 echo.
 
+echo enter a number to start a new download instance every n pages or press enter for only one instance:
+set /p _n8=
+echo.
+
+:o3
 echo enter 1 to create a folder for every game or press enter to save all screenshots in one folder:
 set /p _n6=
 echo.
 
-:o3
 echo select a name sheme for the screenshots:
 echo Option 1: Gamename GameID yyyy_MM_dd hh_mm_ss_id.jpg
-echo Option 2: Gamename GameID yyyy_MM_dd hh_mm_ss id.jpg
-echo Option 3: Gamename GameID yyyy-MM-dd hh_mm_ss_id.jpg
-echo Option 4: Gamename GameID yyyy-MM-dd hh_mm_ss id.jpg
-echo Option 5: Gamename yyyy_MM_dd hh_mm_ss_id.jpg
-echo Option 6: Gamename yyyy_MM_dd hh_mm_ss id.jpg
-echo Option 7: Gamename yyyy-MM-dd hh_mm_ss_id.jpg
-echo Option 8: Gamename yyyy-MM-dd hh_mm_ss id.jpg
+echo Option 2: Gamename GameID yyyy-MM-dd hh_mm_ss_id.jpg
+echo Option 3: Gamename yyyy_MM_dd hh_mm_ss_id.jpg
+echo Option 4: Gamename yyyy-MM-dd hh_mm_ss_id.jpg
 set /p _n7=
 
 if not exist screenshots mkdir screenshots
+if %_n8% gtr 0 GOTO o5
 powershell -ExecutionPolicy Bypass -File "bin\mdhPS1.ps1" -p1 %_n1% -p2 %_n2% -p3 %_n3% -p4 %_n4% -p5 %_n5% -p6 %_n6% -p7 %_n7%
-pause
+GOTO o1
+
+:o5
+setlocal enabledelayedexpansion
+for /l %%i in (%_n4%, %_n8%, %_n5%) do (
+	set /a _n4 = %%i
+	set /a _n5 = %%i + %_n8% - 1
+	start /low powershell -ExecutionPolicy Bypass -File "bin\mdhPS1.ps1" -p1 %_n1% -p2 %_n2% -p3 %_n3% -p4 !_n4! -p5 !_n5! -p6 %_n6% -p7 %_n7%
+)
 GOTO o1
 
 :o4
