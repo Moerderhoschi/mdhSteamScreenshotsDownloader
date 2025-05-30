@@ -1,7 +1,7 @@
 @echo off
 goto oStart
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-28
+// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-30
 // github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 // a set of Javascript and Powershell code to download screenshots from steam
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ execute the mdhSteamScreenshotsDownloader.bat and choose option 3
 
 :oStart
 echo ------------------------------------------------------------------------------------------------------------------------------------
-echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-28 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
+echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-30 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 echo ------------------------------------------------------------------------------------------------------------------------------------
 echo Option 1: download all screenshots of steam user (you enter the steamID in next step) start with newest screenshots
 echo Option 2: download all screenshots of steam user (you enter the steamID in next step) start with oldest screenshots
@@ -62,6 +62,7 @@ echo enter the screenhots pagenumber to end with or press enter to end with last
 set /p _n5=
 echo.
 
+echo MULTI INSTANCE CAN BE CPU HEAVY USE ONLY IF YOU KNOW WHAT YOU DO AND WHEN YOU HAVE A GOOD CPU COOLING
 echo enter a number to start a new download instance every n pages or press enter for only one instance:
 set /p _n8=
 echo.
@@ -94,9 +95,12 @@ GOTO o1
 
 :o4
 cd screenshots
-powershell -c "$n='Grand Theft Auto V 3240220 ';$o='9974983548387459072_screenshots_';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
-powershell -c "$n='Grand Theft Auto V 3240220 ';$o='9690426696418721792_screenshots_';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
-powershell -c "$n='Grand Theft Auto V 3240220 ';$o='271590_screenshots_';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
-powershell -c "$n='Grand Theft Auto V 3240220 ';$o='3240220_screenshots_';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Arma Cold War Assault 65790 ';$o='UKNOWN_GAME 14586209416903655424 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Armored Warfare 443110 ';$o='UKNOWN_GAME 17568754592668188672 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Grand Theft Auto V Legacy 271590 ';$o='UKNOWN_GAME 16769456153770852352 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Grand Theft Auto V Legacy 271590 ';$o='UKNOWN_GAME 9690426696418721792 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Grand Theft Auto V Legacy 271590 ';$o='UKNOWN_GAME 9974983548387459072 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Tom Clancys Ghost Recon Wildlands 460930 ';$o='UKNOWN_GAME 12200718730266673152 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
+powershell -c "$n='Tom Clancys The Division 365590 ';$o='UKNOWN_GAME 11423151661950959616 ';gci -Recurse | Where-Object{$_.Name -match $o} | foreach{$cn=$_.Name;$nn=$cn -replace $o, $n ; echo ($cn + ' -- RENAMED TO -- ' + $nn) ; ren $_.fullname $nn}"
 
 :o1
