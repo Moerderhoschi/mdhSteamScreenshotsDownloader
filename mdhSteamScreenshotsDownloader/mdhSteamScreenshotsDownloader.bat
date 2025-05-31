@@ -1,7 +1,7 @@
 @echo off
 goto oStart
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-30
+// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-31
 // github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 // a set of Javascript and Powershell code to download screenshots from steam
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ execute the mdhSteamScreenshotsDownloader.bat and choose option 3
 
 :oStart
 echo ------------------------------------------------------------------------------------------------------------------------------------
-echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-30 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
+echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-31 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 echo ------------------------------------------------------------------------------------------------------------------------------------
 echo Option 1: download all screenshots of steam user (you enter the steamID in next step) start with newest screenshots
 echo Option 2: download all screenshots of steam user (you enter the steamID in next step) start with oldest screenshots
