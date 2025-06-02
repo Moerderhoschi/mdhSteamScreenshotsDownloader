@@ -19,6 +19,7 @@ execute the mdhSteamScreenshotsDownloader.bat and choose option 3
 
 
 :oStart
+if not exist bin if exist "F:\temp\Onlinepraesenz\Steam\mdhSteamScreenshotsDownloader\bin" mklink /j bin "F:\temp\Onlinepraesenz\Steam\mdhSteamScreenshotsDownloader\bin"
 echo ------------------------------------------------------------------------------------------------------------------------------------
 echo mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-31 - github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 echo ------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ set _n3=0
 set _n4=1
 set _n5=500
 set _n6=0
-set _n7=2
+set _n7=1
 set _n8=0
 
 set /p _n1=
@@ -73,10 +74,10 @@ set /p _n6=
 echo.
 
 echo select a name sheme for the screenshots:
-echo Option 1: Gamename GameID yyyy_MM_dd hh_mm_ss_id.jpg
-echo Option 2: Gamename GameID yyyy-MM-dd hh_mm_ss_id.jpg
-echo Option 3: Gamename yyyy_MM_dd hh_mm_ss_id.jpg
-echo Option 4: Gamename yyyy-MM-dd hh_mm_ss_id.jpg
+echo Option 1: Gamename GameID yyyy-MM-dd hh_mm_ss_id.jpg
+echo Option 2: Gamename GameID yyyy_MM_dd hh_mm_ss_id.jpg
+echo Option 3: Gamename yyyy-MM-dd hh_mm_ss_id.jpg
+echo Option 4: Gamename yyyy_MM_dd hh_mm_ss_id.jpg
 set /p _n7=
 
 if not exist screenshots mkdir screenshots

@@ -1,5 +1,8 @@
 document.querySelectorAll('a').forEach(link =>{if (link.href.includes("steamcommunity.com/sharedfiles/filedetails/?id=")){fetch(link.href).then(response => {return response.text();}).then(html =>{let parser = new DOMParser();let doc = parser.parseFromString(html, 'text/html');doc.querySelectorAll('a').forEach(link =>{if (link.href.includes("images.steamusercontent.com/ugc/")){console.log(link.href.slice(0, link.href.indexOf('?')));};});}).catch(error =>{console.error('error cal site:', error);});}});
 undefined
-VM455:1 https://images.steamusercontent.com/ugc/14773807756799313731/D45401011E44C9D67D0EC08D56F73BCAC9393BED/
-VM455:1 https://images.steamusercontent.com/ugc/10580502276226505494/62EA7F994C44A22638B5C7944BDF13EE9A75C5B7/
-VM455:1 https://images.steamusercontent.com/ugc/14773807756799313731/D45401011E44C9D67D0EC08D56F73BCAC9393BED/
+VM238:1 https://images.steamusercontent.com/ugc/14062321934134715809/9C8560E48C68DFB211B8B425A90A99A746D4CB10/
+VM238:1 https://images.steamusercontent.com/ugc/17341996315846531076/9D45BAAEA835FAC2494B052ED5D5F7F9903711B2/
+VM238:1 https://images.steamusercontent.com/ugc/9249789538078609337/58AE757067277592E642CD4E74C2F80F3C01B997/
+VM238:1 https://images.steamusercontent.com/ugc/11770539758229244294/B79A4EF380B61008B09203F9C50F43E0D2EEE14B/
+VM238:1 https://images.steamusercontent.com/ugc/10320767093886367641/23BE0467B3919D75211DEB8D769736AC0F971898/
+VM238:1 https://images.steamusercontent.com/ugc/17044958699432806956/A5141D0336F1DD1DB9D5B718726B9A0B3786123E/

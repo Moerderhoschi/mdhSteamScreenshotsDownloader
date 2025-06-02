@@ -4,7 +4,7 @@
 ## a set of Javascript and Powershell code to download screenshots from steam
 ###################################################################################################
 
-param ([int]$p1, [string]$p2, [int]$p3, [int]$p4, [int]$p5, [int]$p6, [int]$p7, [int]$p8=0)
+param ([int]$p1, [string]$p2, [string]$p3, [int]$p4, [int]$p5, [int]$p6, [int]$p7, [int]$p8=0)
 
 $debug = 0
 if ($debug -eq 1) {$start = (Get-Date)}
@@ -33,11 +33,14 @@ $array | ForEach-Object {
 		$array2 = 1..9 
 		$array2 | ForEach-Object {
 			if ($links.count -eq 0) {
-				try {$response = wget -UseBasicPArsing $url} catch {}
+				try {$response = wget -Uri $url -UseBasicPArsing} catch {}
 if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString(6) ; write-host "$now : wget screenshots page" ; $start = (Get-Date)}
 				if ($?) {
-					$response = $response.RawContent
-					$links = [regex]::Matches($response, 'https://steamcommunity.com/sharedfiles/filedetails/\?id=\d+')		
+					foreach ($link in $response.Links) {
+						if ($link.href -match "^https://steamcommunity.com/sharedfiles/filedetails/") {
+							$links += $link.href
+						}
+					}
 				}
 				if ($links.count -eq 0) {
 					Write-Host "no pics found on $url, retry $_/9"
@@ -57,8 +60,11 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 					try {$response = wget -UseBasicPArsing $url} catch {}
 if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString(6) ; write-host "$now : wget screenshots page instead id" ; $start = (Get-Date)}
 					if ($?) {
-						$response = $response.RawContent
-						$links = [regex]::Matches($response, 'https://steamcommunity.com/sharedfiles/filedetails/\?id=\d+')		
+						foreach ($link in $response.Links) {
+							if ($link.href -match "^https://steamcommunity.com/sharedfiles/filedetails/") {
+								$links += $link.href
+							}
+						}
 					}
 					if ($links.count -eq 0) {
 						Write-Host "no pics found on $url, retry $_/9"
@@ -75,17 +81,18 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 	}
 
 	$links1 = @() 
-	foreach ($element in $links) {
-		if ($links1 -notcontains $element) {
-			$links1 += $element
+	foreach ($link in $links) {
+		if ($links1 -notcontains $link) {
+			$links1 += $link
 		}
 	}
 
 	$links1 | ForEach-Object {
 		if ($endLoop -eq 1) {return}
 		$links2 = @()
+		$m = 0
 		if ($p1 -ne 3) {
-			$url2 = $_.Value
+			$url2 = $_
 			#Write-Host "scanning pic site $url2"
 			for ($i = 1; $i -le 5; $i++) {
 				if ($i -eq 1 -or $? -eq $false) {
@@ -100,6 +107,12 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 			} else {
 				$response = $response.RawContent
 				$links2 = [regex]::Match($response, 'https://images\.steamusercontent\.com/ugc/[^?]+')
+				$m = $response -match '<div class="screenshotAppName"><a href="https://steamcommunity.com/app/[^>]*>(.*?)</a></div>' 
+				if ($m -eq 'true') {$m = $matches[1].Trim()}
+				if ($m -eq 0) {
+					$m = $response -match '<div class="screenshotAppName"[^>]*>(.*?)</div>' 
+					if ($m -eq 'true') {$m = $matches[1].Trim()}
+				}
 				if (-not $links2.success) {
 					Add-Content -Path ".\downloadLog.txt" -Value "error no screenshot found or Adult control on pic site $url2 of screenshotsite $url"
 				}
@@ -111,26 +124,30 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 		}
 
 		$links3 = @() 
-		foreach ($element in $links2) {
-			if ($links3 -notcontains $element) {
-				$links3 += $element
+		foreach ($link in $links2) {
+			if ($links3 -notcontains $link) {
+				$links3 += $link
 			}
 		}
 
 		$links3 | ForEach-Object {
 			if ($endLoop -eq 1) {return}
-			if ($p1 -eq 3) {
-				$a=$_.SubString($_.IndexOf('https://images.steamusercontent.com/ugc/')) 
-				$i=$a.indexOf('/',40) 
-				$i=$a.indexOf('/',$i+1) 
-				$a=$a.subString(0, $i+1) 
-			}
-			else
-			{
-				$a=$_.Value
-			}
+			if ($true) {
+				if ($p1 -eq 3) {
+					if ($_.Contains("https://images.steamusercontent.com/ugc/")) {
+						$a=$_.SubString($_.IndexOf('https://images.steamusercontent.com/ugc/')) 
+						$i=$a.indexOf('/',40) 
+						$i=$a.indexOf('/',$i+1) 
+						$a=$a.subString(0, $i+1) 
+					}
+				}
+				else
+				{
+					if ($_.value.Contains("https://images.steamusercontent.com/ugc/")) {
+						$a=$_.Value
+					}
+				}
 			
-			if ($a.Contains("https://images.steamusercontent.com/ugc/")) {
 				#Write-Host "scanning pic $a"
 				for ($i = 1; $i -le 5; $i++) {
 					if ($i -eq 1 -or $? -eq $false) {
@@ -157,15 +174,16 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 				
 				$h=$b.headers['Last-Modified'] 
 				$j=[datetime]::Parse($h).ToUniversalTime() 
-				$k=$j.ToString('yyyy_MM_dd HH_mm_ss') 
-				if ($p7 -eq 2 -or $p7 -eq 4) {$k=$j.ToString('yyyy-MM-dd HH_mm_ss')}
+				$k=$j.ToString('yyyy-MM-dd HH_mm_ss') 
+				if ($p7 -eq 2 -or $p7 -eq 4) {$k=$j.ToString('yyyy_MM_dd HH_mm_ss')}
 				#Write-Host "found Last-Modified Date $k"
 				
-				$m = 0
-				if ($q.count -gt 0) {
-					$o = $q.IndexOf($f)
-					if ($o -ge 0) {
-						$m = $r[$o]	
+				if ($m -eq 0) {
+					if ($q.count -gt 0) {
+						$o = $q.IndexOf($f)
+						if ($o -ge 0) {
+							$m = $r[$o]	
+						}
 					}
 				}
 				
@@ -198,16 +216,34 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString(6) ; write-host "$now : wget search for gamename" ; $start = (Get-Date)}
 				}
 
-				if ($url -like "https://steamcommunity.com/id/Moerderhoschi/screenshots/*") {
-					if ($m -eq 'UKNOWN_GAME' -and $f -eq 14586209416903655424) {$m='Arma Cold War Assault' ; $f='65790'}
-					if ($m -eq 'UKNOWN_GAME' -and $f -eq 271590) {$m='Grand Theft Auto V Legacy' ; $f='271590'}
-					if ($m -eq 'UKNOWN_GAME' -and $f -eq 9974983548387459072) {$m='Grand Theft Auto V Legacy' ; $f='271590'}
-					if ($m -eq 'UKNOWN_GAME' -and $f -eq 16769456153770852352) {$m='Grand Theft Auto V Legacy' ; $f='271590'}
-					if ($m -eq 'UKNOWN_GAME' -and $f -eq 11423151661950959616) {$m='Tom Clancys The Division' ; $f='365590'}
-					if ($m -eq 'UKNOWN_GAME' -and $f -eq 12200718730266673152) {$m='Tom Clancys Ghost Recon Wildlands' ; $f='460930'}
-				}
 				if ($m -eq 'UKNOWN_GAME' -and $f -eq 104320) {$m='Rising Storm Red Orchestra 2 Multiplayer' ; $f='35450'}
-				
+				if ($url -like "https://steamcommunity.com/id/Moerderhoschi/screenshots/*") {
+					if ($f -eq 14586209416903655424) {$m='Arma Cold War Assault' ; $f='65790'}
+					if ($f -eq 271590) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 9974983548387459072) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 9690426696418721792) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 16769456153770852352) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 11423151661950959616) {$m='Tom Clancys The Division' ; $f='365590'}
+					if ($f -eq 12200718730266673152) {$m='Tom Clancys Ghost Recon Wildlands' ; $f='460930'}
+				}
+				if ($url -like "https://steamcommunity.com/profiles/76561198024994192/screenshots/*") { # burns
+					if ($f -eq 16875197986605367296) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 16820572071389036544) {$m='Swat 4' ; $f='560370'}
+				}
+				if ($url -like "https://steamcommunity.com/profiles/76561197971956363/screenshots/*") { # joker
+					if ($f -eq 271590) {$m='Grand Theft Auto V' ; $f='271590'}
+				}
+				if ($url -like "https://steamcommunity.com/profiles/76561197976867999/screenshots/*") { # storm
+					if ($f -eq 271590) {$m='Grand Theft Auto V' ; $f='271590'}
+				}
+				if ($url -like "https://steamcommunity.com/id/walkoffame/screenshots/*") { # walk
+					if ($f -eq 271590) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 3240220) {$m='Grand Theft Auto V' ; $f='271590'}
+				}
+				if ($url -like "https://steamcommunity.com/profiles/76561198039019269/screenshots/*") { # xeno
+					if ($f -eq 15412550503199932416) {$m='Grand Theft Auto V' ; $f='271590'}
+					if ($f -eq 13728061722663583744) {$m='Grand Theft Auto V' ; $f='271590'}
+				}
 			
 				if ($p7 -eq 3 -and $m -ne "UKNOWN_GAME") {$f=""}
 				if ($p7 -eq 4 -and $m -ne "UKNOWN_GAME") {$f=""}
@@ -235,8 +271,8 @@ if ($debug -eq 1) {$now = (Get-Date) - $start ; $now = $now.ToString().SubString
 						if (Test-Path "$path$l") {
 							$x = gc "$path$l" -raw
 							if ($b.RawContentLength -eq $x.Length) {
-								Write-Host "$l duplicate file detected, skip download"
-								Add-Content -Path ".\downloadLog.txt" -Value "$l duplicate file detected, skip download"
+								Write-Host "$l duplicate file detected from pic site $url2, skip download"
+								Add-Content -Path ".\downloadLog.txt" -Value "$l duplicate file detected from pic site $url2, skip download"
 								if ($p8 -eq 1) {$endLoop = 1}
 								$i2 = 99
 								return
