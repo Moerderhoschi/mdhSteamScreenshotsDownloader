@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-05-31
+// mdhSteamScreenshotsDownloader(by Moerderhoschi) v2025-06-02
 // github: https://github.com/Moerderhoschi/mdhSteamScreenshotsDownloader
 // a set of Javascript and Powershell code to download screenshots from steam
 // 
